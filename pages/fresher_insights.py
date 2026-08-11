@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import psycopg2
 
-conn = psycopg2.connect(st.secrets["DATABASE_URL"])
+conn = psycopg2.connect(st.secrets["DB_URL"])
 
 cursor = conn.cursor()
 cursor.execute("SELECT version();")
