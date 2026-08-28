@@ -47,7 +47,7 @@ st.write("##### Jobs:")
 st.dataframe(jobs)
 
 skills = pd.read_sql(
-    'SELECT * FROM "Jobs" LIMIT 5',
+    'SELECT * FROM "Skills" LIMIT 5',
     conn
 )
 
@@ -92,4 +92,18 @@ st.bar_chart(comp.set_index("company_name"))
 #-------------------------------------------------------
 
 st.header("Jobs by Location")
+
+locations = pd.read_sql("""
+SELECT
+    location,
+    COUNT(*) AS job_count
+FROM "JobLocations"
+GROUP BY location
+ORDER BY job_count DESC
+LIMIT 20
+""", conn)
+
+st.bar_chart(
+    locations.set_index("location")
+)
 

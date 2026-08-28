@@ -55,4 +55,23 @@ LIMIT 50
 st.header("Top Companies")
 st.bar_chart(
 	top_companies.set_index("company_name")
+
+st.header("Top Locations for Freshers")
+
+top_locations = pd.read_sql("""
+SELECT
+    jl.location,
+    COUNT(*) AS freq
+FROM "JobLocations" jl
+JOIN "Jobs" j
+    ON jl.job_id = j.job_id
+WHERE j.max_experience <= 1
+GROUP BY jl.location
+ORDER BY freq DESC
+LIMIT 50
+""", conn)
+
+st.bar_chart(
+    top_locations.set_index("location")
+)
 )

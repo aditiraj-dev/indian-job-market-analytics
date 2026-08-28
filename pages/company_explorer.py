@@ -78,4 +78,25 @@ st.bar_chart(
 )
 
 st.header("Locations")
+st.header(f"Top Hiring Locations for {selected_comp}")
+
+company_locations = pd.read_sql("""
+    SELECT
+        jl.location,
+        COUNT(*) AS job_count
+    FROM "JobLocations" jl
+    JOIN "Jobs" j
+        ON jl.job_id = j.job_id
+    JOIN "Companies" c
+        ON j.company_id = c.company_id
+    WHERE c.company_name = %s
+    GROUP BY jl.location
+    ORDER BY job_count DESC
+    LIMIT 20
+""", conn, params=[selected_comp])
+
+st.bar_chart(
+    company_locations.set_index("location")
+)
+
 
