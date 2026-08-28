@@ -74,4 +74,3 @@ LIMIT 50
 st.bar_chart(
     top_locations.set_index("location")
 )
-)
