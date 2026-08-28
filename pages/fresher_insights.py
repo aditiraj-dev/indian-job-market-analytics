@@ -55,6 +55,7 @@ LIMIT 50
 st.header("Top Companies")
 st.bar_chart(
 	top_companies.set_index("company_name")
+)
 
 st.header("Top Locations for Freshers")
 
